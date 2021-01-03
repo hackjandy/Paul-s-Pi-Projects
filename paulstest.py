@@ -33,21 +33,22 @@ GPIO.output(K1, GPIO.LOW)
 GPIO.output(K2, GPIO.HIGH)
 GPIO.output(K3, GPIO.HIGH)
 
-for x in range(step_count):
-    GPIO.output(STEPP, GPIO.HIGH)
-    sleep(delay)
-    GPIO.output(STEPP, GPIO.LOW)
-    sleep(delay)
+
+def rotate_motor(gpio_pin):
+    for x in range(step_count):
+        GPIO.output(gpio_pin, GPIO.HIGH)
+        sleep(delay)
+        GPIO.output(gpio_pin, GPIO.LOW)
+        sleep(delay)
+
+
+rotate_motor(STEPP)
 
 sleep(.5)
 print("CW")
 GPIO.output(DIRR, CCW)
 
-for x in range(step_count):
-    GPIO.output(STEPP, GPIO.HIGH)
-    sleep(delay)
-    GPIO.output(STEPP, GPIO.LOW)
-    sleep(delay)
+rotate_motor(STEPP)
 
 sleep(.5)
 print("CCW")
@@ -55,21 +56,13 @@ GPIO.output(DIR, CW)
 GPIO.output(K1, GPIO.HIGH)
 GPIO.output(K2, GPIO.LOW)
 
-for x in range(step_count):
-    GPIO.output(STEP, GPIO.HIGH)
-    sleep(delay)
-    GPIO.output(STEP, GPIO.LOW)
-    sleep(delay)
+rotate_motor(STEP)
 
 sleep(.5)
 print("CW2")
 GPIO.output(DIR, CCW)
 
-for x in range(step_count):
-    GPIO.output(STEP, GPIO.HIGH)
-    sleep(delay)
-    GPIO.output(STEP, GPIO.LOW)
-    sleep(delay)
+rotate_motor(STEP)
 
 sleep(.5)
 print("CCW2")
@@ -77,21 +70,13 @@ GPIO.output(DIRRR, CW)
 GPIO.output(K2, GPIO.HIGH)
 GPIO.output(K3, GPIO.LOW)
 
-for x in range(step_count):
-    GPIO.output(STEPPP, GPIO.HIGH)
-    sleep(delay)
-    GPIO.output(STEPPP, GPIO.LOW)
-    sleep(delay)
+rotate_motor(STEPPP)
 
 sleep(.5)
 print("CW3")
 GPIO.output(DIRRR, CCW)
 
-for x in range(step_count):
-    GPIO.output(STEPPP, GPIO.HIGH)
-    sleep(delay)
-    GPIO.output(STEPPP, GPIO.LOW)
-    sleep(delay)
+rotate_motor(STEPPP)
 
 GPIO.output(K3, GPIO.HIGH)
 print("CCW3")
