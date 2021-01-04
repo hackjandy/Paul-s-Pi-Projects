@@ -18,8 +18,9 @@ print "Green LED 18 on"
 print  "Please press start" 
 GPIO.output(18,GPIO.HIGH)
 
-while GPIO.input(21):
-	time.sleep(0.01)
+while GPIO.output(21)
+	sleep(.01)
+
 
 print "button pushed"
 GPIO.output(18,GPIO.LOW)
