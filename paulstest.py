@@ -14,24 +14,30 @@ K3 = 17
 CW = 1
 CCW = 0
 SPR = 1600
-
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(DIR, GPIO.OUT)
-GPIO.setup(STEP, GPIO.OUT)
-GPIO.setup(DIRR, GPIO.OUT)
-GPIO.setup(STEPP, GPIO.OUT)
-GPIO.setup(STEPPP, GPIO.OUT)
-GPIO.setup(DIRRR, GPIO.OUT)
-GPIO.setup(K1, GPIO.OUT)
-GPIO.setup(K2, GPIO.OUT)
-GPIO.setup(K3, GPIO.OUT)
 step_count = SPR - 1200
 delay = .0009
 
-GPIO.output(DIRR, CW)
-GPIO.output(K1, GPIO.LOW)
-GPIO.output(K2, GPIO.HIGH)
-GPIO.output(K3, GPIO.HIGH)
+
+def initialize():
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(DIR, GPIO.OUT)
+    GPIO.setup(STEP, GPIO.OUT)
+    GPIO.setup(DIRR, GPIO.OUT)
+    GPIO.setup(STEPP, GPIO.OUT)
+    GPIO.setup(STEPPP, GPIO.OUT)
+    GPIO.setup(DIRRR, GPIO.OUT)
+    GPIO.setup(K1, GPIO.OUT)
+    GPIO.setup(K2, GPIO.OUT)
+    GPIO.setup(K3, GPIO.OUT)
+    GPIO.output(DIRR, CW)
+    GPIO.output(K1, GPIO.LOW)
+    GPIO.output(K2, GPIO.HIGH)
+    GPIO.output(K3, GPIO.HIGH)
+
+
+def cleanup():
+    GPIO.output(K3, GPIO.HIGH)
+    GPIO.cleanup()
 
 
 def rotate_motor(gpio_pin, ccw=False):
@@ -49,25 +55,27 @@ def rotate_motor(gpio_pin, ccw=False):
         sleep(delay)
 
 
-rotate_motor(STEPP)
-sleep(.5)
-rotate_motor(STEPP, ccw=True)
+if __name__ == "__main__":
+    initialize()
 
-sleep(.5)
-GPIO.output(K1, GPIO.HIGH)
-GPIO.output(K2, GPIO.LOW)
+    rotate_motor(STEPP)
+    sleep(.5)
+    rotate_motor(STEPP, ccw=True)
 
-rotate_motor(STEP)
-sleep(.5)
-rotate_motor(STEP, ccw=True)
+    sleep(.5)
+    GPIO.output(K1, GPIO.HIGH)
+    GPIO.output(K2, GPIO.LOW)
 
-sleep(.5)
-GPIO.output(K2, GPIO.HIGH)
-GPIO.output(K3, GPIO.LOW)
+    rotate_motor(STEP)
+    sleep(.5)
+    rotate_motor(STEP, ccw=True)
 
-rotate_motor(STEPPP)
-sleep(.5)
-rotate_motor(STEPPP, ccw=True)
+    sleep(.5)
+    GPIO.output(K2, GPIO.HIGH)
+    GPIO.output(K3, GPIO.LOW)
 
-GPIO.output(K3, GPIO.HIGH)
-GPIO.cleanup()
+    rotate_motor(STEPPP)
+    sleep(.5)
+    rotate_motor(STEPPP, ccw=True)
+
+    cleanup()
