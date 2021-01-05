@@ -1,12 +1,12 @@
 from time import sleep
 import RPi.GPIO as GPIO
 
-DIR = 20
-STEP = 21
-DIRR = 19
-STEPP = 26
-DIRRR = 14
-STEPPP = 15
+DIRY = 20
+STEPY = 21
+DIRX = 19
+STEPX = 26
+DIRZ = 14
+STEPZ = 15
 K1 = 22
 K2 = 27
 K3 = 17
@@ -18,20 +18,20 @@ step_count = SPR - 1200
 delay = .0009
 
 motor_to_direction_map = {
-    STEP: DIR,
-    STEPP: DIRR,
-    STEPPP: DIRRR
+    STEPY: DIRY,
+    STEPX: DIRX,
+    STEPZ: DIRZ
 }
 
 
 def initialize():
     GPIO.setmode(GPIO.BCM)
-    GPIO.setup(DIR, GPIO.OUT)
-    GPIO.setup(STEP, GPIO.OUT)
-    GPIO.setup(DIRR, GPIO.OUT)
-    GPIO.setup(STEPP, GPIO.OUT)
-    GPIO.setup(STEPPP, GPIO.OUT)
-    GPIO.setup(DIRRR, GPIO.OUT)
+    GPIO.setup(DIRY, GPIO.OUT)
+    GPIO.setup(STEPY, GPIO.OUT)
+    GPIO.setup(DIRX, GPIO.OUT)
+    GPIO.setup(STEPX, GPIO.OUT)
+    GPIO.setup(STEPZ, GPIO.OUT)
+    GPIO.setup(DIRZ, GPIO.OUT)
     GPIO.setup(K1, GPIO.OUT)
     GPIO.setup(K2, GPIO.OUT)
     GPIO.setup(K3, GPIO.OUT)
@@ -72,25 +72,25 @@ if __name__ == "__main__":
         sleep(.01)
 
     GPIO.output(K1, GPIO.LOW)
-    rotate_motor(STEPP)
+    rotate_motor(STEPX)
     sleep(.5)
-    rotate_motor(STEPP, ccw=True)
+    rotate_motor(STEPX, ccw=True)
 
     sleep(.5)
     GPIO.output(K1, GPIO.HIGH)
     GPIO.output(K2, GPIO.LOW)
 
-    rotate_motor(STEP)
+    rotate_motor(STEPY)
     sleep(.5)
-    rotate_motor(STEP, ccw=True)
+    rotate_motor(STEPY, ccw=True)
 
     sleep(.5)
     GPIO.output(K2, GPIO.HIGH)
     GPIO.output(K3, GPIO.LOW)
 
-    rotate_motor(STEPPP)
+    rotate_motor(STEPZ)
     sleep(.5)
-    rotate_motor(STEPPP, ccw=True)
+    rotate_motor(STEPZ, ccw=True)
 
     print("Cycle Complete")
     cleanup()
