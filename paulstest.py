@@ -29,7 +29,6 @@ def initialize():
     GPIO.setup(K1, GPIO.OUT)
     GPIO.setup(K2, GPIO.OUT)
     GPIO.setup(K3, GPIO.OUT)
-    GPIO.setup(START, GPIO.IN)
     GPIO.output(DIRR, CW)
     GPIO.output(K1, GPIO.LOW)
     GPIO.output(K2, GPIO.HIGH)
@@ -60,11 +59,11 @@ def rotate_motor(gpio_pin, ccw=False):
 if __name__ == "__main__":
     initialize()
 
-    print: "Waiting"
-    print: "Green LED 18 on"
-    print: "Please press start"
+    print("Waiting")
+    print("Green LED 18 on")
+    print("Please press start")
 
-    while GPIO.output(START)                #wait for start button
+    while GPIO.input(START):  # wait for start button
         sleep(.01)
 
     rotate_motor(STEPP)
@@ -87,5 +86,5 @@ if __name__ == "__main__":
     sleep(.5)
     rotate_motor(STEPPP, ccw=True)
 
-    print: "Cycle Complete"
+    print("Cycle Complete")
     cleanup()
