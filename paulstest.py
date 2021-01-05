@@ -17,6 +17,12 @@ SPR = 1600
 step_count = SPR - 1200
 delay = .0009
 
+motor_to_direction_map = {
+    STEP: DIR,
+    STEPP: DIRR,
+    STEPPP: DIRRR
+}
+
 
 def initialize():
     GPIO.setmode(GPIO.BCM)
@@ -42,10 +48,10 @@ def cleanup():
 
 def rotate_motor(gpio_pin, ccw=False):
     if ccw:
-        GPIO.output(DIRR, CCW)
+        GPIO.output(motor_to_direction_map[gpio_pin], CCW)
         print("CCW")
     else:
-        GPIO.output(DIRR, CW)
+        GPIO.output(motor_to_direction_map[gpio_pin], CW)
         print("CW")
 
     for x in range(step_count):
