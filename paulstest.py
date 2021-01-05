@@ -29,8 +29,7 @@ def initialize():
     GPIO.setup(K1, GPIO.OUT)
     GPIO.setup(K2, GPIO.OUT)
     GPIO.setup(K3, GPIO.OUT)
-    GPIO.output(DIRR, CW)
-    GPIO.output(K1, GPIO.LOW)
+    GPIO.output(K1, GPIO.HIGH)
     GPIO.output(K2, GPIO.HIGH)
     GPIO.output(K3, GPIO.HIGH)
     GPIO.setup(START, GPIO.IN, pull_up_down=GPIO.PUD_UP)
@@ -66,6 +65,7 @@ if __name__ == "__main__":
     while GPIO.input(START):  # wait for start button
         sleep(.01)
 
+    GPIO.output(K1, GPIO.LOW)
     rotate_motor(STEPP)
     sleep(.5)
     rotate_motor(STEPP, ccw=True)
