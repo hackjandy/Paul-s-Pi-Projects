@@ -1,5 +1,6 @@
 from time import sleep
 import RPi.GPIO as GPIO
+from datetime import datetime
 
 DIRY = 20
 STEPY = 21
@@ -11,6 +12,7 @@ K1 = 22
 K2 = 27
 K3 = 17
 START = 16
+BLINK = 12
 CW = 1
 CCW = 0
 SPR = 1600
@@ -32,6 +34,7 @@ def initialize():
     GPIO.setup(STEPX, GPIO.OUT)
     GPIO.setup(STEPZ, GPIO.OUT)
     GPIO.setup(DIRZ, GPIO.OUT)
+    GPIO.setup(BLINK, GPIO.OUT)
     GPIO.setup(K1, GPIO.OUT)
     GPIO.setup(K2, GPIO.OUT)
     GPIO.setup(K3, GPIO.OUT)
@@ -44,7 +47,6 @@ def initialize():
 def cleanup():
     GPIO.output(K3, GPIO.HIGH)
     GPIO.cleanup()
-
 
 def rotate_motor(gpio_pin, ccw=False):
     if ccw:
@@ -65,8 +67,16 @@ if __name__ == "__main__":
     initialize()
 
     print("Waiting")
-    print("Green LED 18 on")
+    print("blinking LED 12 on")
     print("Please press start")
+
+if datetime.now().second % 2 == 0:
+    print("on")
+    GPIO.output(BLINK,GPIO.HIGH)
+else:
+    print("off")
+    GPIO.output (BLINK, GPIO.LOW)
+
 
     while GPIO.input(START):  # wait for start button
         sleep(.01)
