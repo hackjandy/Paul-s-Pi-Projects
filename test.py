@@ -72,7 +72,7 @@ if __name__ == "__main__":
     GPIO.output(K8, GPIO.LOW)
     print("Waiting")
     print("blinking LED on")
-    print("Please press start"
+    print("Please press start")
 
     while GPIO.input(START):  # wait for start button
         sleep(.01)
